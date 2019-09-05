@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jmelosegui.Mvc.GoogleMap.Examples</RootNamespace>
-    <AssemblyName>Jmelosegui.Mvc.GoogleMap.Examples</AssemblyName>
+    <RootNamespace>GMaps.Mvc.Examples</RootNamespace>
+    <AssemblyName>GMaps.Mvc.Examples</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -323,9 +323,9 @@
     <Folder Include="Views\PolylineBasic\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jmelosegui.Mvc.Googlemap\Jmelosegui.Mvc.GoogleMap.csproj">
+    <ProjectReference Include="..\GMaps.Mvc\GMaps.Mvc.csproj">
       <Project>{5476dbd6-f0ec-4b7a-a616-db42a7ef7e1b}</Project>
-      <Name>Jmelosegui.Mvc.GoogleMap</Name>
+      <Name>GMaps.Mvc</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -360,7 +360,8 @@
           <IISUrl>http://localhost:24576/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>http://localhost/Jmelosegui.Mvc.Googlemap.Examples</CustomServerUrl>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
