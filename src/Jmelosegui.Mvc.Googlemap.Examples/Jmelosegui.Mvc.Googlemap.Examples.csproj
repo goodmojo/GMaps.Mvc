@@ -37,7 +37,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\Jmelosegui.Mvc.GoogleMap.ruleset</CodeAnalysisRuleSet>
     <NoWarn>SA1633</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -49,7 +48,6 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\Jmelosegui.Mvc.GoogleMap.ruleset</CodeAnalysisRuleSet>
     <NoWarn>SA1633</NoWarn>
   </PropertyGroup>
   <ItemGroup>
