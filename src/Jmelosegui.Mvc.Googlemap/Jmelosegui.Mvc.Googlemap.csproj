@@ -49,10 +49,11 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Jmelosegui.Mvc.Googlemap.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -62,9 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CenterFactory.cs" />
-    <CodeAnalysisDictionary Include="CodeAnalysisDictionary.xml">
-      <SubType>Designer</SubType>
-    </CodeAnalysisDictionary>
     <Compile Include="ControlPosition.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Helpers\Serialization\PointJsonConverter.cs" />
@@ -194,9 +192,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Jmelosegui.Mvc.Googlemap.snk" />
     <None Include="Objects\MapObjectClassDiagram.cd" />
-    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
