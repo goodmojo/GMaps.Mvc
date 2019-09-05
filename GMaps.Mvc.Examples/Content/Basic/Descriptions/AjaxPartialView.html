@@ -3,9 +3,7 @@
 <p>Notice that to avoid including the google map script multiples time, you should include the jmelosegui.googlemap.js script</p>
 
 <pre class="prettyprint">
-    @(Html.GoogleMap()
-        .ScriptRegistrar(scripts =&gt; scripts.Add(&quot;jmelosegui.googlemap.js&quot;))
-     )
+    @(Html.LoadGMapsScripts())
 </pre>
 <p>and then pass the map container id and the ajax funtion to make the ajax call</p>
 

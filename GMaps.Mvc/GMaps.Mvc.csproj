@@ -94,6 +94,7 @@
     <Compile Include="CenterFactory.cs" />
     <Compile Include="ControlPosition.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="GmapsMvcApiController.cs" />
     <Compile Include="Helpers\Serialization\PointJsonConverter.cs" />
     <Compile Include="Helpers\Serialization\SizeJsonConverter.cs" />
     <Compile Include="HtmlTemplate`1.cs" />
@@ -209,10 +210,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptRegistrar.cs" />
     <Compile Include="ScriptRegistrarBuilder.cs" />
-    <Content Include="Scripts\markerclusterer.js" />
+    <EmbeddedResource Include="Scripts\markerclusterer.js" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\jmelosegui.googlemap.js" />
+    <EmbeddedResource Include="Scripts\jmelosegui.googlemap.js" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json">

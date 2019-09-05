@@ -13,7 +13,7 @@
 {
     @Scripts.Render("~/bundles/prettyprint")
 
-    @(Html.GoogleMap().ScriptRegistrar())
+    @(Html.LoadGMapsScripts())
 
     <script type='text/javascript'>
 
@@ -38,6 +38,6 @@
 
         prettyPrint();
     </script>
-    
+
     @RenderSection("scripts", required: false)
 }
