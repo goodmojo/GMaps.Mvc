@@ -22,9 +22,7 @@
 
 @section scripts
 {
-    @(Html.GoogleMap()
-          .ScriptRegistrar(scripts => scripts.Add("jmelosegui.googlemap.js"))
-     )
+    @(Html.LoadGMapsScripts())
 
     <script type='text/javascript'>
 
