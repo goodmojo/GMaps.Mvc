@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Jmelosegui.Mvc.GoogleMap.Examples.MvcApplication" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="GMaps.Mvc.Examples.MvcApplication" Language="C#" %>

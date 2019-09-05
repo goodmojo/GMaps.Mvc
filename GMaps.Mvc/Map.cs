@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Juan M. Elosegui. All rights reserved.
 // Licensed under the GPL v2 license. See LICENSE.txt file in the project root for full license information.
 
-namespace Jmelosegui.Mvc.GoogleMap
+namespace GMaps.Mvc
 {
     using System;
     using System.Collections.Generic;
@@ -135,19 +135,19 @@ namespace Jmelosegui.Mvc.GoogleMap
 
                 switch (typeof(TMapObject).FullName)
                 {
-                    case "Jmelosegui.Mvc.GoogleMap.Marker":
+                    case "GMaps.Mvc.Marker":
                         mapObject = new Marker(this);
                         this.Markers.Add((Marker)mapObject);
                         break;
-                    case "Jmelosegui.Mvc.GoogleMap.Circle":
+                    case "GMaps.Mvc.Circle":
                         mapObject = new Circle(this);
                         this.Circles.Add((Circle)mapObject);
                         break;
-                    case "Jmelosegui.Mvc.GoogleMap.Polygon":
+                    case "GMaps.Mvc.Polygon":
                         mapObject = new Polygon(this);
                         this.Polygons.Add((Polygon)mapObject);
                         break;
-                    case "Jmelosegui.Mvc.GoogleMap.Polyline":
+                    case "GMaps.Mvc.Polyline":
                         mapObject = new Polyline(this);
                         this.Polylines.Add((Polyline)mapObject);
                         break;

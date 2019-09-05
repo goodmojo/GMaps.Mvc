@@ -1,4 +1,4 @@
-﻿namespace Jmelosegui.Mvc.GoogleMap.Examples.App_Data
+﻿namespace GMaps.Mvc.Examples.App_Data
 {
     using System;
     using System.Collections.Generic;

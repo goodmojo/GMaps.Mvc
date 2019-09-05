@@ -1,4 +1,4 @@
-﻿namespace Jmelosegui.Mvc.GoogleMap.Examples.Controllers
+﻿namespace GMaps.Mvc.Examples.Controllers
 {
     using System.Collections.Generic;
     using System.Drawing;
