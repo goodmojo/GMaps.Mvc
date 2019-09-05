@@ -8,8 +8,8 @@
     <ProjectGuid>{5476DBD6-F0EC-4B7A-A616-DB42A7EF7E1B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jmelosegui.Mvc.GoogleMap</RootNamespace>
-    <AssemblyName>Jmelosegui.Mvc.GoogleMap</AssemblyName>
+    <RootNamespace>GMaps.Mvc</RootNamespace>
+    <AssemblyName>GMaps.Mvc</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
