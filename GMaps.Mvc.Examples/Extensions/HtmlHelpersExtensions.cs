@@ -1,4 +1,4 @@
-namespace Jmelosegui.Mvc.GoogleMap.Examples
+namespace GMaps.Mvc.Examples
 {
     using System.Web;
     using System.Web.Mvc;

@@ -1,4 +1,4 @@
-﻿namespace Jmelosegui.Mvc.GoogleMap.Examples.App_Data
+﻿namespace GMaps.Mvc.Examples.App_Data
 {
     public class RegionInfo
     {
