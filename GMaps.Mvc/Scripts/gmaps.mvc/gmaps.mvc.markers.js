@@ -24,7 +24,6 @@
     };
 
     var infowindow;
-    var markersCluster = {};
     gmaps.mvc.GoogleMarker.prototype = {
 
         isLoaded: function () {
@@ -86,7 +85,7 @@
             }
             this.initialize();
 
-            markersCluster[this.id] = this.gMarker;
+            this.parent.markerCluster[this.id] = this.gMarker;
 
         },
         openInfoWindow: function () {
