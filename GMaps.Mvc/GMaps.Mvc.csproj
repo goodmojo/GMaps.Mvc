@@ -62,6 +62,7 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -94,7 +95,7 @@
     <Compile Include="CenterFactory.cs" />
     <Compile Include="ControlPosition.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="GmapsMvcApiController.cs" />
+    <Compile Include="GMapsMvcApiController.cs" />
     <Compile Include="Helpers\Serialization\PointJsonConverter.cs" />
     <Compile Include="Helpers\Serialization\SizeJsonConverter.cs" />
     <Compile Include="HtmlTemplate`1.cs" />

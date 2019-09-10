@@ -12,6 +12,7 @@ namespace GMaps.Mvc
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.UI;
+    using System.Text.RegularExpressions;
 
     public class ScriptRegistrar
     {
@@ -110,7 +111,7 @@ namespace GMaps.Mvc
 
         private void WriteScriptSources(TextWriter writer)
         {
-            const string bundlePath = "~/jmelosegui/googlemap";
+            const string bundlePath = "~/GMaps.Mvc/Scripts";
             var bundle = new ScriptBundle(bundlePath);
 
             var scripts = this.Components.SelectMany(c => c.ScriptFileNames)
@@ -122,14 +123,14 @@ namespace GMaps.Mvc
             {
                 var localScriptFileName = scriptFileName;
 
-                if (scriptFileName.IndexOf("://", StringComparison.Ordinal) == -1)
+                if(Regex.IsMatch(scriptFileName, @"^(https?://|/?GMapsMvcApi)"))
                 {
-                    localScriptFileName = CombinePath(this.BasePath, scriptFileName);
-                    bundle.Include(localScriptFileName);
+                    writer.WriteLine(Scripts.Render(localScriptFileName).ToHtmlString());
                 }
                 else
                 {
-                   writer.WriteLine(Scripts.Render(localScriptFileName).ToHtmlString());
+                    localScriptFileName = CombinePath(this.BasePath, scriptFileName);
+                    bundle.Include(localScriptFileName);
                 }
             }
 

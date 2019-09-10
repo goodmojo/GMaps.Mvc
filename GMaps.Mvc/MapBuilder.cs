@@ -421,6 +421,11 @@ namespace GMaps.Mvc
             return new ScriptRegistrarBuilder(this.scriptRegistrar);
         }
 
+        public ScriptRegistrarBuilder LoadScripts()
+        {
+            return new ScriptRegistrarBuilder(this.scriptRegistrar);
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public ScriptRegistrarBuilder ScriptRegistrar(Action<IList<string>> action)
         {
