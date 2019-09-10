@@ -1,403 +1,7 @@
 ﻿(function ($) {
     "use strict";
-
-    var $jmelosegui = $.jmelosegui = {
-
-        create: function (query, settings) {
-            var name = settings.name;
-            var options = $.extend({}, $.fn[name].defaults, settings.options);
-
-            return query.each(function () {
-                var $$ = $(this);
-                options = $.meta ? $.extend({}, options, $$.data()) : options;
-
-                if (!$$.data(name)) {
-                    var component = settings.init(this, options);
-
-                    $$.data(name, component);
-
-                    $jmelosegui.trigger(this, 'load');
-
-                    if (settings.success && !$.isEmptyObject(options)) settings.success(component);
-                }
-            });
-        },
-
-        bind: function (context, events) {
-            var $element = $(context.element ? context.element : context);
-            $.each(events, function (eventName) {
-                if ($.isFunction(this)) $element.bind(eventName, this);
-            });
-        },
-
-        delegate: function (context, handler) {
-            return function (e) {
-                handler.apply(context, [e, this]);
-            };
-        },
-
-        trigger: function (element, eventName, e) {
-            e = $.extend(e || {}, new $.Event(eventName));
-            e.stopPropagation();
-            $(element).trigger(e);
-            return e.isDefaultPrevented();
-        },
-
-    };
-
-    // jQuery extender
-    $.fn.GoogleMap = function (options) {
-        return $jmelosegui.create(this, {
-            name: 'GoogleMap',
-            init: function (element, options) {
-                return new $jmelosegui.GoogleMap(element, options);
-            },
-            options: options,
-            success: function (map) {
-                map.load();
-            }
-        });
-    };
-
-    //Polyline
-    $jmelosegui.GooglePolyline = function (map, config) {
-        //init
-        this.Map = map;
-        this.gPolyline = null;
-        //properties
-        this.clickable = config.clickable;
-        this.points = config.points;
-        this.strokeColor = config.strokeColor;
-        this.strokeOpacity = config.strokeOpacity;
-        this.strokeWeight = config.strokeWeight;
-        this.points = [];
-
-        if (config.points) {
-            for (var i = 0; i < config.points.length; i++) {
-                this.points.push(new google.maps.LatLng(config.points[i].lat, config.points[i].lng));
-            }
-        }
-    };
-
-    $jmelosegui.GooglePolyline.prototype = {
-        isLoaded: function () {
-            return this.gPolyline !== null;
-        },
-        load: function () {
-            var options = {
-                path: this.points,
-                strokeColor: this.strokeColor,
-                strokeOpacity: this.strokeOpacity,
-                strokeWeight: this.strokeWeight,
-                clickable: this.clickable
-            };
-            var polyline = new google.maps.Polyline(options);
-            polyline.setMap(this.Map);
-        }
-    };
-
-    //Polygons
-    $jmelosegui.GooglePolygon = function (map, config) {
-        //init
-        this.Map = map;
-        this.gPolygon = null;
-        //properties
-        this.clickable = config.clickable;
-        this.fillColor = config.fillColor;
-        this.fillOpacity = config.fillOpacity;
-        this.points = config.points;
-        this.strokeColor = config.strokeColor;
-        this.strokeOpacity = config.strokeOpacity;
-        this.strokeWeight = config.strokeWeight;
-        this.points = [];
-
-        if (config.points) {
-            for (var i = 0; i < config.points.length; i++) {
-                this.points.push(new google.maps.LatLng(config.points[i].lat, config.points[i].lng));
-            }
-        }
-
-    };
-
-    $jmelosegui.GooglePolygon.prototype = {
-        isLoaded: function () {
-            return this.gPolygon !== null;
-        },
-        load: function () {
-            var options = {
-                paths: this.points,
-                strokeColor: this.strokeColor,
-                strokeOpacity: this.strokeOpacity,
-                strokeWeight: this.strokeWeight,
-                fillColor: this.fillColor,
-                fillOpacity: this.fillOpacity,
-                clickable: this.clickable
-            };
-            var polygon = new google.maps.Polygon(options);
-            polygon.setMap(this.Map);
-        }
-    };
-
-    // Circles
-    $jmelosegui.GoogleCircle = function (map, config) {
-        //init
-        this.Map = map;
-        this.gCircle = null;
-        //properties
-        this.clickable = config.clickable;
-        this.fillColor = config.fillColor;
-        this.fillOpacity = config.fillOpacity;
-        this.points = config.points;
-        this.strokeColor = config.strokeColor;
-        this.strokeOpacity = config.strokeOpacity;
-        this.strokeWeight = config.strokeWeight;
-        this.center = config.center;
-        this.radius = config.radius;
-    };
-
-    $jmelosegui.GoogleCircle.prototype = {
-        isLoaded: function () {
-            return this.GCircle !== null;
-        },
-        load: function () {
-            var options = {
-                center: new google.maps.LatLng(this.center.lat, this.center.lng),
-                radius: this.radius,
-                strokeColor: this.strokeColor,
-                strokeOpacity: this.strokeOpacity,
-                strokeWeight: this.strokeWeight,
-                fillColor: this.fillColor,
-                fillOpacity: this.fillOpacity,
-                clickable: this.clickable
-            };
-            var circle = new google.maps.Circle(options);
-            circle.setMap(this.Map);
-        }
-    };
-
-    //Markers
-    $jmelosegui.GoogleMarker = function (map, index, config) {
-        // init
-        this.gMarker = null;
-        this.Map = map.GMap;
-        this.parent = map;
-        this.index = index;
-        //properties
-        this.id = config.id;
-        this.latitude = config.lat;
-        this.longitude = config.lng;
-        this.address = config.address;
-        this.title = config.title;
-        this.icon = config.icon;
-        this.clickable = (config.clickable !== undefined) ? config.clickable : true;
-        this.draggable = config.draggable;
-        this.window = config.window;
-        this.zIndex = config.zIndex ? config.zIndex : 0;
-        this.enableMarkersClustering = config.enableMarkersClustering ? config.enableMarkersClustering : false;
-        this.markerEvents = config.markerEvents;
-    };
-
-    var infowindow;
-    var markersCluster = {};
-    $jmelosegui.GoogleMarker.prototype = {
-
-        isLoaded: function () {
-            return (this.gMarker !== null);
-        },
-        initialize: function () {
-            //Work around to the issue https://code.google.com/p/gmaps-api-issues/issues/detail?id=7925
-            if (this.window && this.clickable) {
-                var openWindowEvent = 'click';
-                if (this.window.openOnRightClick) {
-                    openWindowEvent = 'rightclick';
-                }
-                google.maps.event.addListener(this.gMarker, openWindowEvent, $jmelosegui.delegate(this, this.openInfoWindow));
-            }
-
-            if (this.markerEvents) {
-                this.attachMarkerEvents();
-            }
-        },
-        attachMarkerEvents: function () {
-            for (var i = 0; i < this.markerEvents.length; i++) {
-                var eventName = Object.getOwnPropertyNames(this.markerEvents[i])[0];
-                //Work around to the issue https://code.google.com/p/gmaps-api-issues/issues/detail?id=7925
-                if (eventName === 'click' && !this.clickable) continue;
-                this.markerEventsCallBack(this.id, this.gMarker, this.markerEvents[i][eventName], eventName);
-            }
-        },
-        markerEventsCallBack: function (id, marker, handler, eventName) {
-            google.maps.event.addListener(marker, eventName, function (e) {
-                var args = { 'id': id, 'marker': marker, 'eventName': eventName };
-                $.extend(args, e);
-                handler(args);
-            });
-        },
-        createImage: function (options) {
-            var image = new google.maps.MarkerImage(options.path,
-                new google.maps.Size(options.size.width, options.size.height),
-                new google.maps.Point(options.point.x, options.point.y),
-                new google.maps.Point(options.anchor.x, options.anchor.y));
-            return image;
-        },
-        load: function (point) {
-            this.latitude = point.lat();
-            this.longitude = point.lng();
-            var markerOptions = {
-                position: new google.maps.LatLng(this.latitude, this.longitude),
-                map: this.enableMarkersClustering ? null : this.Map,
-                title: this.title,
-                clickable: this.clickable,
-                draggable: this.draggable,
-                icon: this.icon ? this.createImage(this.icon) : null,
-                zIndex: this.zIndex
-            };
-            // create
-            this.gMarker = new google.maps.Marker(markerOptions);
-            $.extend(this.gMarker, { address: this.address });
-            if (this.parent.fitToMarkersBounds) {
-                this.parent.bounds.extend(this.gMarker.position);
-            }
-            this.initialize();
-
-            markersCluster[this.id] = this.gMarker;
-
-        },
-        openInfoWindow: function () {
-            if (this.isLoaded()) {
-                if (infowindow) {
-                    infowindow.close();
-                }
-                var node = document.getElementById(this.window.content).cloneNode(true);
-                infowindow = new google.maps.InfoWindow(this.window);
-                infowindow.setContent(node.innerHTML);
-                var windowsLoc;
-                if (this.window.lat && this.window.lng) {
-                    windowsLoc = new google.maps.LatLng(this.window.lat, this.window.lng);
-                } else {
-                    windowsLoc = this.gMarker.getPosition();
-                }
-                infowindow.setPosition(windowsLoc);
-                infowindow.open(this.Map, this.gMarker);
-            }
-        }
-    };
-
-    //Image Map Types
-    $jmelosegui.ImageMapType = function (map, config) {
-
-        this.map = map;
-        this.name = config.name;
-        this.alt = config.altName;
-        this.maxZoom = config.maxZoom;
-        this.minZoom = config.minZoom;
-        this.radius = config.radius;
-        this.opacity = config.opacity;
-
-        this.repeatHorizontally = config.repeatHorizontally;
-        this.repeatVertically = config.repeatVertically;
-        this.tileSize = new google.maps.Size(config.tileSize.width, config.tileSize.height);
-        this.tileUrlPattern = config.tileUrlPattern;
-    }
-
-    $jmelosegui.ImageMapType.prototype = {
-        getTileUrl: function (coord, zoom) {
-            var normalizedCoord = this.getNormalizedCoord(coord, zoom);
-
-            if (!normalizedCoord) {
-                return null;
-            }
-
-            var imageUrl = this.format(this.tileUrlPattern, coord.x, coord.y, zoom, this.tileSize.width, this.tileSize.height);
-            console.log(imageUrl);
-            return imageUrl;
-
-        },
-
-        getNormalizedCoord: function getNormalizedCoord(coord, zoom) {
-            var y = coord.y;
-            var x = coord.x;
-            var tileRange = 1 << zoom;
-
-            if (y < 0 || y >= tileRange) {
-                if (this.repeatVertically) {
-                    y = (y % tileRange + tileRange) % tileRange;
-                } else {
-                    return null;
-                }
-            }
-
-            if (x < 0 || x >= tileRange) {
-                if (this.repeatHorizontally) {
-                    x = (x % tileRange + tileRange) % tileRange;
-                } else {
-                    return null;
-                }
-            }
-
-            return {
-                x: x,
-                y: y
-            };
-        },
-
-        format: function (value) {
-            var args = Array.prototype.slice.call(arguments, 1);
-            return value.replace(/{(\d+)}/g, function (match, number) {
-                return typeof args[number] != 'undefined'
-                  ? args[number]
-                  : match
-                ;
-            });
-        }
-    }
-
-    // Styled Map Types
-    $jmelosegui.StyledMapType = function (map, config) {
-
-        this.map = map;
-        this.name = config.name;
-        this.alt = config.altName;
-        this.maxZoom = config.maxZoom;
-        this.minZoom = config.minZoom;
-        this.radius = config.radius;
-        this.opacity = config.opacity;
-
-        this.styles = config.styles;
-    }
-
-    $jmelosegui.StyledMapType.prototype = {}
-
-    // Layers
-    // HeatMapLayer
-    $jmelosegui.HeatMapLayer = function (map, config) {
-
-        this.map = map;
-        this.dissipating = (config.dissipating !== undefined) ? config.clickable : true;
-        this.maxIntensity = config.maxIntensity;
-        this.opacity = config.opacity;
-        this.radius = config.radius;
-        this.gradient = config.gradient;
-        this.data = config.data;
-    }
-
-    $jmelosegui.HeatMapLayer.prototype = {}
-
-    // KmlLayer
-    $jmelosegui.KmlLayer = function (map, config) {
-
-        this.map = map;
-        this.clickable = config.clickable;
-        this.preserveViewport = config.preserveViewport;
-        this.screenOverlays = config.screenOverlays;
-        this.suppressInfoWindows = config.suppressInfoWindows;
-        this.zIndex = config.zIndex;
-        this.url = config.url;
-    }
-
-    $jmelosegui.KmlLayer.prototype = {}
-
-    $jmelosegui.GoogleMap = function (element, options) {
+	
+    gmaps.mvc.GoogleMap = function (element, options) {
 
         this.element = element;
 
@@ -609,14 +213,14 @@
             }
         }
 
-        $jmelosegui.bind(this, {
+        gmaps.mvc.bind(this, {
             load: this.onLoad
         });
     };
     var delay = 100;
     var markerIndex = 0;
     var loadGoogleMapScript = true;
-    $jmelosegui.GoogleMap.prototype = {
+    gmaps.mvc.GoogleMap.prototype = {
         ajax: function (options) {
             var self = this;
             $.ajax({
@@ -764,7 +368,7 @@
                         var p = results[0].geometry.location;
                         config.lat = p.lat();
                         config.lng = p.lng();
-                        var marker = new $jmelosegui.GoogleMarker(map, markerIndex, config);
+                        var marker = new gmaps.mvc.GoogleMarker(map, markerIndex, config);
                         map.renderMarker(marker);
 
                     } else {
@@ -903,7 +507,7 @@
 
                         config.enableMarkersClustering = this.enableMarkersClustering;
                         config.markerEvents = this.markerEvents;
-                        var marker = new $jmelosegui.GoogleMarker(this, i, config);
+                        var marker = new gmaps.mvc.GoogleMarker(this, i, config);
                         this.renderMarker(marker);
                     };
                     if (this.enableMarkersClustering === true) {
@@ -917,21 +521,21 @@
             // polylines
             if (this.polylines) {
                 for (i = 0; i < this.polylines.length; i++) {
-                    var polyline = new $jmelosegui.GooglePolyline(this.GMap, this.polylines[i]);
+                    var polyline = new gmaps.mvc.GooglePolyline(this.GMap, this.polylines[i]);
                     this.renderShape(polyline);
                 }
             }
             // polygons
             if (this.polygons) {
                 for (i = 0; i < this.polygons.length; i++) {
-                    var polygon = new $jmelosegui.GooglePolygon(this.GMap, this.polygons[i]);
+                    var polygon = new gmaps.mvc.GooglePolygon(this.GMap, this.polygons[i]);
                     this.renderShape(polygon);
                 }
             }
             // circles
             if (this.circles) {
                 for (i = 0; i < this.circles.length; i++) {
-                    var circle = new $jmelosegui.GoogleCircle(this.GMap, this.circles[i]);
+                    var circle = new gmaps.mvc.GoogleCircle(this.GMap, this.circles[i]);
                     this.renderShape(circle);
                 }
             }
@@ -939,14 +543,14 @@
             var mapType;
             if (this.imageMapTypes) {
                 for (i = 0; i < this.imageMapTypes.length; i++) {
-                    mapType = new $jmelosegui.ImageMapType(this.GMap, this.imageMapTypes[i]);
+                    mapType = new gmaps.mvc.ImageMapType(this.GMap, this.imageMapTypes[i]);
                     this.addImageMapType(this.GMap, mapType);
                 }
             }
 
             if (this.styledMapTypes) {
                 for (i = 0; i < this.styledMapTypes.length; i++) {
-                    mapType = new $jmelosegui.StyledMapType(this.GMap, this.styledMapTypes[i]);
+                    mapType = new gmaps.mvc.StyledMapType(this.GMap, this.styledMapTypes[i]);
                     this.addStyledMapType(this.GMap, mapType);
                 }
             }
@@ -955,11 +559,11 @@
                 for (i = 0; i < this.layers.length; i++) {
                     var layer = this.layers[i];
                     if (layer.name === 'heatmap') {
-                        var heatmapLayer = new $jmelosegui.HeatMapLayer(this.GMap, layer.options);
+                        var heatmapLayer = new gmaps.mvc.HeatMapLayer(this.GMap, layer.options);
                         this.addHeatMapLayer(this.GMap, heatmapLayer);
                     }
                     if (layer.name === 'kml') {
-                        var kmlLayer = new $jmelosegui.KmlLayer(this.GMap, layer.options);
+                        var kmlLayer = new gmaps.mvc.KmlLayer(this.GMap, layer.options);
                         this.addKmlLayer(this.GMap, kmlLayer);
                     }
                     if (layer.name === 'traffic') {
@@ -1026,5 +630,17 @@
             transitLayer.setMap(map);
         }
     };
-
+	
+    $.fn.GoogleMap = function (options) {
+        return gmaps.mvc.create(this, {
+            name: 'GoogleMap',
+            init: function (element, options) {
+                return new gmaps.mvc.GoogleMap(element, options);
+            },
+            options: options,
+            success: function (map) {
+                map.load();
+            }
+        });
+    };
 })(jQuery);

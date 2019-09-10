@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.IO;
+using GMaps.Mvc.Extensions;
 
 namespace GMaps.Mvc
 {
@@ -19,6 +20,7 @@ namespace GMaps.Mvc
                 .Where(x => x.StartsWith(scriptNamespace))
                 .ToList()
             ;
+            scripts.Prioritize(x => x.EndsWith("gmaps.mvc.js"));
             using (var writer = new StringWriter())
             {
                 foreach (var script in scripts)
