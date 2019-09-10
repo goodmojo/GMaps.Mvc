@@ -6,17 +6,29 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.IO;
 using GMaps.Mvc.Extensions;
+using System.Reflection;
 
 namespace GMaps.Mvc
 {
     public class GMapsMvcApiController : Controller
     {
-        public ActionResult EmbeddedScripts()
+        protected Type EmbeddingAccessType => this.GetType();
+        protected Assembly EmbeddingAssembly => System.Reflection.Assembly.GetAssembly(typeof(GMapsMvcApiController));
+        protected string RootEmbeddingNamespace => this.EmbeddingAccessType.Namespace;
+        public ActionResult MarkerClusterIcon(int size)
         {
-            var type = this.GetType();
-            var assembly = System.Reflection.Assembly.GetAssembly(type);
-            var scriptNamespace = $"{type.Namespace}.Scripts";
-            var scripts = assembly.GetManifestResourceNames()
+            var resourceName = $"{RootEmbeddingNamespace}.Content.markerclusterer.m{size}.png";
+            var icons = this.EmbeddingAssembly.GetManifestResourceNames()
+                .Where(x => x.StartsWith($"{RootEmbeddingNamespace}.Content"))
+                .ToList()
+            ;
+            var stream = this.EmbeddingAssembly.GetManifestResourceStream(resourceName);
+            return this.File(stream, "image/png");
+        }
+        public ActionResult Scripts()
+        {
+            var scriptNamespace = $"{RootEmbeddingNamespace}.Scripts";
+            var scripts = this.EmbeddingAssembly.GetManifestResourceNames()
                 .Where(x => x.StartsWith(scriptNamespace))
                 .ToList()
             ;
@@ -25,7 +37,7 @@ namespace GMaps.Mvc
             {
                 foreach (var script in scripts)
                 {
-                    using (Stream stream = assembly.GetManifestResourceStream(script))
+                    using (Stream stream = this.EmbeddingAssembly.GetManifestResourceStream(script))
                     {
                         using (StreamReader reader = new StreamReader(stream))
                         {

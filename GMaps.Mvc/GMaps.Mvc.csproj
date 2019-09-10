@@ -212,13 +212,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptRegistrar.cs" />
     <Compile Include="ScriptRegistrarBuilder.cs" />
-    <EmbeddedResource Include="Scripts\gmaps.mvc\gmaps.mvc.googlemap.js" />
-    <EmbeddedResource Include="Scripts\gmaps.mvc\gmaps.mvc.js" />
-    <EmbeddedResource Include="Scripts\gmaps.mvc\gmaps.mvc.layers.js" />
-    <EmbeddedResource Include="Scripts\gmaps.mvc\gmaps.mvc.maptypes.js" />
-    <EmbeddedResource Include="Scripts\gmaps.mvc\gmaps.mvc.markers.js" />
-    <EmbeddedResource Include="Scripts\gmaps.mvc\gmaps.mvc.shapes.js" />
-    <EmbeddedResource Include="Scripts\markerclusterer.js" />
+    <EmbeddedResource Include="Scripts\**\*.js" />
+    <EmbeddedResource Include="Content\**" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json">
