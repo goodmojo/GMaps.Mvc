@@ -12,6 +12,7 @@ namespace GMaps.Mvc
     using System.Threading;
     using System.Web.Mvc;
     using System.Web.UI;
+    using System.Configuration;
 
     public class Map
     {
@@ -28,7 +29,7 @@ namespace GMaps.Mvc
 
         public string Address { get; set; }
 
-        public string ApiKey { get; internal set; }
+        public string ApiKey { get; internal set; } = ConfigurationManager.AppSettings["GMaps.Mvc.ApiKey"]?.ToString();
 
         public MapClientEvents ClientEvents { get; private set; }
 
@@ -326,12 +327,9 @@ namespace GMaps.Mvc
 
             if (!request.IsAjaxRequest())
             {
-                this.ScriptFileNames.Add("jmelosegui.googlemap.js");
-
-                if (this.EnableMarkersClustering)
-                {
-                    this.ScriptFileNames.Add("markerclusterer.js");
-                }
+                var urlHelper = new System.Web.Mvc.UrlHelper(this.builder.ViewContext.RequestContext);
+                var url = urlHelper.Action("EmbeddedScripts", "GMapsMvcApi");
+                this.ScriptFileNames.Add(url);
             }
         }
 

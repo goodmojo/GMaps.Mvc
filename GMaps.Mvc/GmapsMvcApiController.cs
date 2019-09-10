@@ -8,7 +8,7 @@ using System.IO;
 
 namespace GMaps.Mvc
 {
-    public class GmapsMvcApiController : Controller
+    public class GMapsMvcApiController : Controller
     {
         public ActionResult EmbeddedScripts()
         {
