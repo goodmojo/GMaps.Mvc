@@ -133,6 +133,7 @@
         }
 
         //Marker Events
+        this.markerCluster = {};
         this.markerEvents = [];
 
         if (options.markerEvents) {
@@ -392,7 +393,7 @@
                 hideSingleGroupMarker: this.markerClusteringOptions.hideSingleGroupMarker,
                 styles: this.markerClusteringOptions.customStyles
             };
-            var markerArray = $.map(markersCluster, function (v) { return v; });
+            var markerArray = $.map(this.markerCluster, function (v) { return v; });
             new MarkerClusterer(this.GMap, markerArray, options);
         },
         renderCircle: function (c) {
@@ -422,7 +423,7 @@
                     map.GMap.fitBounds(map.bounds);
                 }
                 if (map.markers_geocoding_completed !== undefined) {
-                    var args = { 'map': map.GMap, 'markers': markersCluster };
+                    var args = { 'map': map.GMap, 'markers': this.markerCluster };
                     map.markers_geocoding_completed(args);
                 }
             }
@@ -436,7 +437,7 @@
                 this.render();
                 this.attachMapEvents();
                 if (this.map_loaded !== undefined) {
-                    var args = { 'map': this.GMap, 'markers': markersCluster };
+                    var args = { 'map': this.GMap, 'markers': this.markerCluster };
                     this.map_loaded(args);
                 }
             }
