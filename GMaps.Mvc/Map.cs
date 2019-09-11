@@ -328,7 +328,7 @@ namespace GMaps.Mvc
             if (!request.IsAjaxRequest())
             {
                 var urlHelper = new System.Web.Mvc.UrlHelper(this.builder.ViewContext.RequestContext);
-                var url = urlHelper.Action("EmbeddedScripts", "GMapsMvcApi");
+                var url = urlHelper.Action("Scripts", "GMapsMvcApi");
                 this.ScriptFileNames.Add(url);
             }
         }

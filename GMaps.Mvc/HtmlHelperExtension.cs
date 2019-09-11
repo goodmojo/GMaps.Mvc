@@ -18,17 +18,5 @@ namespace GMaps.Mvc
 
             return new MapBuilder(helper.ViewContext);
         }
-
-        public static MvcHtmlString LoadGMapsScripts(this HtmlHelper helper)
-        {
-            // Instantiate a UrlHelper
-            var urlHelper = new System.Web.Mvc.UrlHelper(helper.ViewContext.RequestContext);
-            var url = urlHelper.Action("EmbeddedScripts", "GMapsMvcApi");
-            // Create tag builder
-            var builder = new TagBuilder("script");
-            builder.MergeAttribute("src", url);
-            builder.MergeAttribute("type", "text/javascript");
-            return MvcHtmlString.Create(builder.ToString(TagRenderMode.Normal));
-        }
     }
 }
