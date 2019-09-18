@@ -6,52 +6,52 @@ namespace GMaps.Mvc
     using System;
     using System.Drawing;
 
-    public abstract class ShapeBuilder<TShape>
+    public abstract class ShapeBuilderBase<TShape>
         where TShape : Shape
     {
-        protected ShapeBuilder(ShapeBuilder<TShape> builder)
+        protected ShapeBuilderBase(ShapeBuilderBase<TShape> builder)
             : this(PassThroughNonNull(builder).Shape)
         {
         }
 
-        protected ShapeBuilder(TShape shape)
+        protected ShapeBuilderBase(TShape shape)
         {
             this.Shape = shape;
         }
 
         protected TShape Shape { get; }
 
-        public ShapeBuilder<TShape> Clickable(bool enabled)
+        public ShapeBuilderBase<TShape> Clickable(bool enabled)
         {
             this.Shape.Clickable = enabled;
             return this;
         }
 
-        public ShapeBuilder<TShape> StrokeColor(Color value)
+        public ShapeBuilderBase<TShape> StrokeColor(Color value)
         {
             this.Shape.StrokeColor = value;
             return this;
         }
 
-        public ShapeBuilder<TShape> StrokeOpacity(double value)
+        public ShapeBuilderBase<TShape> StrokeOpacity(double value)
         {
             this.Shape.StrokeOpacity = value;
             return this;
         }
 
-        public ShapeBuilder<TShape> StrokeWeight(int value)
+        public ShapeBuilderBase<TShape> StrokeWeight(int value)
         {
             this.Shape.StrokeWeight = value;
             return this;
         }
 
-        public ShapeBuilder<TShape> ZIndex(int value)
+        public ShapeBuilderBase<TShape> ZIndex(int value)
         {
             this.Shape.ZIndex = value;
             return this;
         }
 
-        private static ShapeBuilder<TShape> PassThroughNonNull(ShapeBuilder<TShape> builder)
+        private static ShapeBuilderBase<TShape> PassThroughNonNull(ShapeBuilderBase<TShape> builder)
         {
             if (builder == null)
             {

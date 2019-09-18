@@ -5,12 +5,12 @@ namespace GMaps.Mvc
 {
     using System.Collections.Generic;
 
-    public class ShapeSerializer<TShape> : ISerializer
+    public abstract class ShapeSerializeBase<TShape> : ISerializer
         where TShape : Shape
     {
         private readonly TShape shape;
 
-        public ShapeSerializer(TShape shape)
+        public ShapeSerializeBase(TShape shape)
         {
             this.shape = shape;
         }

@@ -5,12 +5,6 @@ namespace GMaps.Mvc
 {
     using System;
 
-    public interface IMapObjectBinding<in TMapObject>
-        where TMapObject : MapObject
-    {
-        void ItemDataBound(TMapObject item, object value);
-    }
-
     public sealed class MapObjectBinding<TMapObject, TDataItem> : IMapObjectBinding<TMapObject>
         where TMapObject : MapObject
     {

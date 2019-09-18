@@ -5,17 +5,17 @@ namespace GMaps.Mvc
 {
     using System;
 
-    public class MapObjectBindingBuilder<TMapObject, TDataItem>
+    public class MapObjectBindingBuilderBase<TMapObject, TDataItem>
         where TMapObject : MapObject
     {
         private readonly MapObjectBinding<TMapObject, TDataItem> bindingComponent;
 
-        public MapObjectBindingBuilder(MapObjectBinding<TMapObject, TDataItem> mapObjectBinding)
+        public MapObjectBindingBuilderBase(MapObjectBinding<TMapObject, TDataItem> mapObjectBinding)
         {
             this.bindingComponent = mapObjectBinding;
         }
 
-        public MapObjectBindingBuilder<TMapObject, TDataItem> ItemDataBound(Action<TMapObject, TDataItem> action)
+        public MapObjectBindingBuilderBase<TMapObject, TDataItem> ItemDataBound(Action<TMapObject, TDataItem> action)
         {
             this.bindingComponent.ItemDataBound = action;
             return this;

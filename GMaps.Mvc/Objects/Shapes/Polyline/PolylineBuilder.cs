@@ -5,7 +5,7 @@ namespace GMaps.Mvc
 {
     using System;
 
-    public class PolylineBuilder : ShapeBuilder<Polyline>
+    public class PolylineBuilder : ShapeBuilderBase<Polyline>
     {
         public PolylineBuilder(Polyline shape)
             : base(shape)
