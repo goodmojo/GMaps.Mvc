@@ -26,7 +26,7 @@ namespace GMaps.Mvc
 
         public int ZIndex { get; set; }
 
-        public override LayerSerializer CreateSerializer()
+        public override ISerializer CreateSerializer()
         {
             return new KmlLayerSerializer(this);
         }

@@ -5,7 +5,7 @@ namespace GMaps.Mvc
 {
     using System.Collections.Generic;
 
-    public class PolygonSerializer : ShapeSerializer<Polygon>
+    public class PolygonSerializer : ShapeSerializeBase<Polygon>
     {
         private readonly Polygon polygon;
 

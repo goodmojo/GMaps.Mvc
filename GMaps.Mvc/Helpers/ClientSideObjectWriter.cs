@@ -385,7 +385,7 @@ namespace GMaps.Mvc
             return this;
         }
 
-        public virtual ClientSideObjectWriter Append(string name, HtmlTemplate htmlTemplate)
+        public virtual ClientSideObjectWriter Append(string name, DefaultHtmlTemplate htmlTemplate)
         {
             if (name == null)
             {

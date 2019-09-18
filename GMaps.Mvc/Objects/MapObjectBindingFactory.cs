@@ -11,7 +11,7 @@ namespace GMaps.Mvc
         public IMapObjectBinding<TMapObject> Binder { get; private set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-        public MapObjectBindingFactory<TMapObject> For<TDataItem>(Action<MapObjectBindingBuilder<TMapObject, TDataItem>> action)
+        public MapObjectBindingFactory<TMapObject> For<TDataItem>(Action<MapObjectBindingBuilderBase<TMapObject, TDataItem>> action)
         {
             if (action == null)
             {
@@ -19,7 +19,7 @@ namespace GMaps.Mvc
             }
 
             this.Binder = new MapObjectBinding<TMapObject, TDataItem>();
-            var builder = new MapObjectBindingBuilder<TMapObject, TDataItem>((MapObjectBinding<TMapObject, TDataItem>)this.Binder);
+            var builder = new MapObjectBindingBuilderBase<TMapObject, TDataItem>((MapObjectBinding<TMapObject, TDataItem>)this.Binder);
             action(builder);
 
             return this;

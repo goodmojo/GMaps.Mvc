@@ -13,9 +13,9 @@ namespace GMaps.Mvc
 
         public string Name { get; private set; }
 
-        public virtual LayerSerializer CreateSerializer()
+        public virtual ISerializer CreateSerializer()
         {
-            return new LayerSerializer(this);
+            return new DefaultLayerSerializer(this);
         }
     }
 }

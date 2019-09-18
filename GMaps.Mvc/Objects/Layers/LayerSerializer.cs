@@ -6,14 +6,19 @@ namespace GMaps.Mvc
     using System.Collections.Generic;
     using System.Globalization;
 
-    public class LayerSerializer : ISerializer
+    public class DefaultLayerSerializer : LayerSerializer<Layer>
     {
-        internal LayerSerializer(Layer layer)
+        internal DefaultLayerSerializer(Layer layer) : base(layer) { }
+    }
+    public class LayerSerializer<TLayer> : ISerializer
+        where TLayer : Layer
+    {
+        internal LayerSerializer(TLayer layer)
         {
             this.Layer = layer;
         }
 
-        public Layer Layer { get; private set; }
+        public TLayer Layer { get; private set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         public IDictionary<string, object> Serialize()

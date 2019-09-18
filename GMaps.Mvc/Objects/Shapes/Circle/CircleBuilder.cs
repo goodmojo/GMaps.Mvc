@@ -3,7 +3,7 @@
 
 namespace GMaps.Mvc
 {
-    public class CircleBuilder : Shape2DBuilder<Circle>
+    public class CircleBuilder : Shape2DBuilderBase<Circle>
     {
         public CircleBuilder(Circle shape)
             : base(shape)

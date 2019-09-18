@@ -5,7 +5,7 @@ namespace GMaps.Mvc
 {
     using System.Collections.Generic;
 
-    public class PolylineSerializer : ShapeSerializer<Polyline>
+    public class PolylineSerializer : ShapeSerializeBase<Polyline>
     {
         private readonly Polyline polyline;
 

@@ -5,7 +5,7 @@ namespace GMaps.Mvc
 {
     using System.Collections.Generic;
 
-    public class CircleSerializer : ShapeSerializer<Circle>
+    public class CircleSerializer : ShapeSerializeBase<Circle>
     {
         private readonly Circle circle;
 

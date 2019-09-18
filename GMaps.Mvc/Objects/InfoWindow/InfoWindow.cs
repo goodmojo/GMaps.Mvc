@@ -22,11 +22,11 @@ namespace GMaps.Mvc
             this.marker = marker;
             this.Content = string.Format(CultureInfo.InvariantCulture, "{0}Marker{1}", marker.Map.Id, marker.Index);
 
-            this.Template = new HtmlTemplate();
+            this.Template = new DefaultHtmlTemplate();
         }
 
         [JsonIgnore]
-        public HtmlTemplate Template
+        public DefaultHtmlTemplate Template
         {
             get;
             private set;

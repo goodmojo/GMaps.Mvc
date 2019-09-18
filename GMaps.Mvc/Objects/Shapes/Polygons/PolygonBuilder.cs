@@ -5,7 +5,7 @@ namespace GMaps.Mvc
 {
     using System;
 
-    public class PolygonBuilder : Shape2DBuilder<Polygon>
+    public class PolygonBuilder : Shape2DBuilderBase<Polygon>
     {
         public PolygonBuilder(Polygon shape)
             : base(shape)

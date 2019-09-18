@@ -37,7 +37,7 @@ namespace GMaps.Mvc
 
         public int Radius { get; set; }
 
-        public override LayerSerializer CreateSerializer()
+        public override ISerializer CreateSerializer()
         {
             return new HeatmapLayerSerializer(this);
         }
