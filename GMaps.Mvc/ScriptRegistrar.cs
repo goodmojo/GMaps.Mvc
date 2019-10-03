@@ -109,17 +109,47 @@ namespace GMaps.Mvc
             return path;
         }
 
+        private List<string> ConsolidateScripts(IEnumerable<string> scripts)
+        {
+            var consolidated = new List<string>();
+            var queryMaps = new Dictionary<string,List<IDictionary<string, string>>>();
+            foreach(var script in scripts)
+            {
+                Regex uriSplit = new Regex(@"^(?<left>[^\?]+?)(?<right>\?.*)?$");
+                var match = uriSplit.Match(script);
+                string path = match.Groups["left"].Value, query = match.Groups["right"].Value;
+                var qm = System.Web.HttpUtility.ParseQueryString(query).ToDictionary();
+                if (!queryMaps.ContainsKey(path))
+                    queryMaps[path] = new List<IDictionary<string, string>>();
+                queryMaps[path].Add(qm);
+            }
+            foreach(var kvp in queryMaps)
+            {
+                string path = kvp.Key;
+                var qmList = kvp.Value;
+                var merged = qmList.MergeCompatible();
+                var query = string.Join("&", merged.Select(x => $"{x.Key}={x.Value}"));
+                var uri = path;
+                if (query.Length > 0)
+                    uri += $"?{query}";
+                consolidated.Add(uri);
+            }
+            return consolidated;
+        }
+
         private void WriteScriptSources(TextWriter writer)
         {
             const string bundlePath = "~/GMaps.Mvc/Scripts";
             var bundle = new ScriptBundle(bundlePath);
+            var scripts = this.Components
+                .SelectMany(c => c.ScriptFileNames)
+                .Distinct()
+                .Union(this.FixedScriptCollection)
+                .ToList()
+            ;
+            var consolidated = this.ConsolidateScripts(scripts);
 
-            var scripts = this.Components.SelectMany(c => c.ScriptFileNames)
-                              .Union(this.FixedScriptCollection)
-                              .Distinct()
-                              .ToList();
-
-            foreach (var scriptFileName in scripts)
+            foreach (var scriptFileName in consolidated)
             {
                 var localScriptFileName = scriptFileName;
 
