@@ -246,7 +246,6 @@ MarkerClusterer.prototype.setupStyles_ = function() {
 
   for (var i = 0, size; size = this.sizes[i]; i++) {
     var url = this.imagePath_.replace('{size}',  (i + 1));
-    console.log('generated marker cluster url:', url);
     this.styles_.push({
       url: url,
       height: size,
